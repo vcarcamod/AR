@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>AR con QR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene 
-    embedded 
-    arjs="sourceType: webcam; debugUIEnabled: true;">
-    
-    <a-box position="0 0.5 0" material="color: red;"></a-box>
-    
+  <a-scene embedded arjs>
     <a-entity camera></a-entity>
   </a-scene>
+  <div id="qr-reader" style="width:300px"></div>
+  <div id="qr-reader-results"></div>
+  <script>
+    // Inicializar el escáner QR
+function onScanSuccess(qrMessage) {
+    document.getElementById('qr-reader-results').innerText = qrMessage;
+    // Puedes implementar lógica adicional aquí, como cargar un modelo 3D basado en el mensaje QR
+    if (qrMessage === 'modelo1') {
+        // Cargar el modelo 3D específico en la escena de A-Frame
+        document.querySelector('a-scene').innerHTML += `
+          <a-entity gltf-model="url(models/Nuts_in_Container_0906104058.glb)" scale="1 1 1"></a-entity>
+        `;
+    } else if (qrMessage === 'modelo2') {
+        document.querySelector('a-scene').innerHTML += `
+          <a-entity gltf-model="url(models/Spice_Grinders_in_Gar_0904202745.glb)" scale="1 1 1"></a-entity>
+        `;
+    }
+}
+
+var html5QrCode = new Html5Qrcode("qr-reader");
+html5QrCode.start(
+  { facingMode: "environment" }, // Usa la cámara trasera
+  {
+    fps: 10, // Cuadros por segundo
+    qrbox: { width: 250, height: 250 } // Tamaño del recuadro
+  },
+  onScanSuccess
+);
+
+  </script>
 </body>
 </html>
