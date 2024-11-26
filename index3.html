@@ -13,17 +13,22 @@
   <div id="qr-reader" style="width:300px"></div>
   <div id="qr-reader-results"></div>
   <script>
+    console.log('Script iniciado'); // Mensaje para confirmar que el script se carga correctamente
+
     // Inicializar el escáner QR
     function onScanSuccess(qrMessage) {
-        alert(qrMessage)
-      document.getElementById('qr-reader-results').innerText = qrMessage;
+      console.log('Código QR escaneado:', qrMessage); // Mensaje para confirmar que se ha leído un QR
+      document.getElementById('qr-reader-results').innerText = `Contenido QR: ${qrMessage}`;
+      
       // Implementar lógica adicional aquí, como cargar un modelo 3D basado en el mensaje QR
       if (qrMessage === 'modelo1') {
+          console.log('Cargando modelo1'); // Mensaje para confirmar la carga del modelo1
           // Cargar el modelo 3D específico en la escena de A-Frame
           document.querySelector('a-scene').innerHTML += `
             <a-entity gltf-model="url(models/Nuts_in_Container_0906104058.glb)" scale="1 1 1"></a-entity>
           `;
       } else if (qrMessage === 'modelo2') {
+          console.log('Cargando modelo2'); // Mensaje para confirmar la carga del modelo2
           document.querySelector('a-scene').innerHTML += `
             <a-entity gltf-model="url(models/Spice_Grinders_in_Gar_0904202745.glb)" scale="1 1 1"></a-entity>
           `;
@@ -38,9 +43,12 @@
         qrbox: { width: 250, height: 250 } // Tamaño del recuadro
       },
       onScanSuccess
-    ).catch(err => {
+    ).then(() => {
+      console.log('Escaneo de QR iniciado'); // Mensaje para confirmar que el escaneo ha comenzado
+    }).catch(err => {
       console.error(`No se pudo iniciar el escaneo: ${err}`);
     });
+
   </script>
 </body>
 </html>
