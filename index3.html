@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Librería de A-Frame -->
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-
-  <!-- Librería de AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene 
-    embedded 
-    arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: true;">
+  <a-scene
+    embedded
+    arjs="sourceType: webcam; debugUIEnabled: true; trackingMethod: best;">
     
     <a-nft type="nft" url="assets/arbol">
-      <a-box position="0 0.5 0" material="color: blue;"></a-box>
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
     </a-nft>
     
     <a-entity camera></a-entity>
