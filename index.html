@@ -1,0 +1,48 @@
+<a-scene>
+  <a-assets id="asset-loader">
+    <!-- Los modelos se cargarán dinámicamente -->
+  </a-assets>
+
+  <!-- La cámara de AR.js -->
+  <a-entity camera></a-entity>
+</a-scene>
+
+<script>
+  // Datos dinámicos: Asocia imágenes (marcadores) a modelos
+  const markers = [
+    { pattern: "path/to/marker1.patt", model: "path/to/model1.gltf", scale: "0.5 0.5 0.5" },
+    { pattern: "path/to/marker2.patt", model: "path/to/model2.gltf", scale: "0.7 0.7 0.7" },
+    { pattern: "path/to/marker3.patt", model: "path/to/model3.gltf", scale: "1 1 1" },
+    // Agrega tantos marcadores como necesites
+  ];
+
+  // Referencia a la escena
+  const scene = document.querySelector("a-scene");
+  const assetLoader = document.querySelector("#asset-loader");
+
+  // Crear dinámicamente los marcadores y modelos
+  markers.forEach(({ pattern, model, scale }) => {
+    // Crear un elemento <a-asset-item> para cargar el modelo
+    const assetItem = document.createElement("a-asset-item");
+    assetItem.setAttribute("id", `model-${pattern}`);
+    assetItem.setAttribute("src", model);
+    assetLoader.appendChild(assetItem);
+
+    // Crear el marcador
+    const marker = document.createElement("a-marker");
+    marker.setAttribute("type", "pattern");
+    marker.setAttribute("url", pattern);
+
+    // Crear la entidad del modelo
+    const modelEntity = document.createElement("a-entity");
+    modelEntity.setAttribute("gltf-model", `#model-${pattern}`);
+    modelEntity.setAttribute("scale", scale);
+    modelEntity.setAttribute("rotation", "0 0 0");
+
+    // Agregar el modelo al marcador
+    marker.appendChild(modelEntity);
+
+    // Agregar el marcador a la escena
+    scene.appendChild(marker);
+  });
+</script>
