@@ -4,7 +4,7 @@
   <title>AR con QR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
-  <script src="https://unpkg.com/browse/html5-qrcode@2.3.7/html5-qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode/dist/html5-qrcode.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
   <a-scene embedded arjs>
@@ -14,31 +14,32 @@
   <div id="qr-reader-results"></div>
   <script>
     // Inicializar el escáner QR
-function onScanSuccess(qrMessage) {
-    document.getElementById('qr-reader-results').innerText = qrMessage;
-    // Puedes implementar lógica adicional aquí, como cargar un modelo 3D basado en el mensaje QR
-    if (qrMessage === 'modelo1') {
-        // Cargar el modelo 3D específico en la escena de A-Frame
-        document.querySelector('a-scene').innerHTML += `
-          <a-entity gltf-model="url(models/Nuts_in_Container_0906104058.glb)" scale="1 1 1"></a-entity>
-        `;
-    } else if (qrMessage === 'modelo2') {
-        document.querySelector('a-scene').innerHTML += `
-          <a-entity gltf-model="url(models/Spice_Grinders_in_Gar_0904202745.glb)" scale="1 1 1"></a-entity>
-        `;
+    function onScanSuccess(qrMessage) {
+      document.getElementById('qr-reader-results').innerText = qrMessage;
+      // Implementar lógica adicional aquí, como cargar un modelo 3D basado en el mensaje QR
+      if (qrMessage === 'modelo1') {
+          // Cargar el modelo 3D específico en la escena de A-Frame
+          document.querySelector('a-scene').innerHTML += `
+            <a-entity gltf-model="url(models/Nuts_in_Container_0906104058.glb)" scale="1 1 1"></a-entity>
+          `;
+      } else if (qrMessage === 'modelo2') {
+          document.querySelector('a-scene').innerHTML += `
+            <a-entity gltf-model="url(models/Spice_Grinders_in_Gar_0904202745.glb)" scale="1 1 1"></a-entity>
+          `;
+      }
     }
-}
 
-var html5QrCode = new Html5Qrcode("qr-reader");
-html5QrCode.start(
-  { facingMode: "environment" }, // Usa la cámara trasera
-  {
-    fps: 10, // Cuadros por segundo
-    qrbox: { width: 250, height: 250 } // Tamaño del recuadro
-  },
-  onScanSuccess
-);
-
+    var html5QrCode = new Html5Qrcode("qr-reader");
+    html5QrCode.start(
+      { facingMode: "environment" }, // Usa la cámara trasera
+      {
+        fps: 10, // Cuadros por segundo
+        qrbox: { width: 250, height: 250 } // Tamaño del recuadro
+      },
+      onScanSuccess
+    ).catch(err => {
+      console.error(`No se pudo iniciar el escaneo: ${err}`);
+    });
   </script>
 </body>
 </html>
