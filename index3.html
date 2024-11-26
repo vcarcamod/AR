@@ -18,20 +18,23 @@
     // Inicializar el escáner QR
     function onScanSuccess(qrMessage) {
       console.log('Código QR escaneado:', qrMessage); // Mensaje para confirmar que se ha leído un QR
-      document.getElementById('qr-reader-results').innerText = `Contenido QR: ${qrMessage}`;
-      
-      // Implementar lógica adicional aquí, como cargar un modelo 3D basado en el mensaje QR
-      if (qrMessage === 'modelo1') {
+      document.getElementById('qr-reader-results').innerText = `Contenido QR: ${qrMessage.trim()}`;
+
+      // Comparar el mensaje QR después de eliminar posibles espacios adicionales
+      const cleanedMessage = qrMessage.trim();
+      if (cleanedMessage === 'modelo1') {
           console.log('Cargando modelo1'); // Mensaje para confirmar la carga del modelo1
           // Cargar el modelo 3D específico en la escena de A-Frame
           document.querySelector('a-scene').innerHTML += `
             <a-entity gltf-model="url(models/Nuts_in_Container_0906104058.glb)" scale="1 1 1"></a-entity>
           `;
-      } else if (qrMessage === 'modelo2') {
+      } else if (cleanedMessage === 'modelo2') {
           console.log('Cargando modelo2'); // Mensaje para confirmar la carga del modelo2
           document.querySelector('a-scene').innerHTML += `
             <a-entity gltf-model="url(models/Spice_Grinders_in_Gar_0904202745.glb)" scale="1 1 1"></a-entity>
           `;
+      } else {
+          console.log('Código QR no reconocido');
       }
     }
 
