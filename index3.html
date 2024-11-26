@@ -24,15 +24,18 @@
       const cleanedMessage = qrMessage.trim();
       if (cleanedMessage === 'modelo1') {
           console.log('Cargando modelo1'); // Mensaje para confirmar la carga del modelo1
-          // Cargar el modelo 3D específico en la escena de A-Frame
-          document.querySelector('a-scene').innerHTML += `
-            <a-entity gltf-model="url(models/Nuts_in_Container_0906104058.glb)" scale="1 1 1"></a-entity>
-          `;
+          const model1 = document.createElement('a-entity');
+          model1.setAttribute('gltf-model', 'url(models/Nuts_in_Container_0906104058.glb)');
+          model1.setAttribute('scale', '1 1 1');
+          model1.setAttribute('position', '0 0 -5');
+          document.querySelector('a-scene').appendChild(model1);
       } else if (cleanedMessage === 'modelo2') {
           console.log('Cargando modelo2'); // Mensaje para confirmar la carga del modelo2
-          document.querySelector('a-scene').innerHTML += `
-            <a-entity gltf-model="url(models/Spice_Grinders_in_Gar_0904202745.glb)" scale="1 1 1"></a-entity>
-          `;
+          const model2 = document.createElement('a-entity');
+          model2.setAttribute('gltf-model', 'url(models/Spice_Grinders_in_Gar_0904202745.glb)');
+          model2.setAttribute('scale', '1 1 1');
+          model2.setAttribute('position', '0 0 -5');
+          document.querySelector('a-scene').appendChild(model2);
       } else {
           console.log('Código QR no reconocido');
       }
